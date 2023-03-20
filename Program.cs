@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Blog;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
 
 class Program
 {
@@ -19,14 +20,17 @@ class Program
         Console.WriteLine("All posts:");
         var data = context.BlogPosts.Select(x => x.Title).ToList();
         Console.WriteLine(JsonSerializer.Serialize(data));
-            
-            
+
+
         Console.WriteLine("How many comments each user left:");
         //ToDo: write a query and dump the data to console
         // Expected result (format could be different, e.g. object serialized to JSON is ok):
         // Ivan: 4
         // Petr: 2
         // Elena: 3
+
+        var result1 = Answers.NumberOfCommentsPerUser(context).ToList();
+        result1.ForEach(Console.WriteLine);
 
         Console.WriteLine("Posts ordered by date of last comment. Result should include text of last comment:");
         //ToDo: write a query and dump the data to console
@@ -35,6 +39,8 @@ class Program
         // Post1: '2020-03-05', '8'
         // Post3: '2020-02-14', '9'
 
+        var result2 = Answers.PostsOrderedByLastCommentDate(context).ToList();
+        result2.ForEach(Console.WriteLine);
 
         Console.WriteLine("How many last comments each user left:");
         // 'last comment' is the latest Comment in each Post
@@ -43,7 +49,9 @@ class Program
         // Ivan: 2
         // Petr: 1
 
-            
+        var result3 = Answers.NumberOfLastCommentsLeftByUser(context).ToList();
+        result3.ForEach(Console.WriteLine);
+
         // Console.WriteLine(
         //     JsonSerializer.Serialize(BlogService.NumberOfCommentsPerUser(context)));
         // Console.WriteLine(
